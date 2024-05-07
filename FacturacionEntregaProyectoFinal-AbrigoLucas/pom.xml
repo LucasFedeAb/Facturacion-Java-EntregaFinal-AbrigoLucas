@@ -12,7 +12,7 @@
 	<artifactId>FacturacionEntregaProyectoFinal-AbrigoLucas</artifactId>
 	<version>v 1.0.0</version>
 	<name>FacturacionEntregaProyectoFinal-AbrigoLucas</name>
-	<description>Proyecto final Facturacion coderhouse</description>
+	<description>Proyecto final Facturacion Coderhouse</description>
 	<properties>
 		<java.version>21</java.version>
 	</properties>
@@ -39,6 +39,11 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>6.4.4.Final</version>
 		</dependency>
 	</dependencies>
 
