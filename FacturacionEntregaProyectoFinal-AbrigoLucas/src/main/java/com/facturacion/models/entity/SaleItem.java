@@ -2,6 +2,7 @@ package com.facturacion.models.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,34 +11,46 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
+@Schema(description = "Modelo de Producto Vendido")
 @Entity
 public class SaleItem {
-	
+	@Schema(description = "Id de item venta ", requiredMode = Schema.RequiredMode.AUTO)
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "Id_item_venta")
 	private Integer itemSaleId;
+	@Schema(description = "Id de producto vendido", requiredMode = Schema.RequiredMode.REQUIRED, example = "2")
 	@Column(name = "Id_producto_vendido")
 	private Integer productId;
+	@Schema(description = "Cantidad x producto vendido", requiredMode = Schema.RequiredMode.REQUIRED, example = "3")
 	@Column(name = "Cantidad vendida")
 	private int quantity;
+	@Schema(description = "Codigo barra prodcuto", requiredMode = Schema.RequiredMode.REQUIRED, example = "123456")
 	@Column(name = "Codigo barra")
 	private Integer code;
+	@Schema(description = "Categoria de producto", requiredMode = Schema.RequiredMode.REQUIRED, example = "Notebooks")
 	@Column(name = "Categoria")
 	private String category;
+	@Schema(description = "Nombre porducto vendido", requiredMode = Schema.RequiredMode.REQUIRED, example = "Notebook 8GB RAM")
 	@Column(name = "Nombre")
 	private String name;
+	@Schema(description = "Marca de producto vendido", requiredMode = Schema.RequiredMode.REQUIRED, example = "Lenovo")
 	@Column(name = "Marca")
 	private String brand;
+	@Schema(description = "DNI del Cliente", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
 	@Column(name = "Descripcion")
     private String description;
+	@Schema(description = "Monto total de venta", requiredMode = Schema.RequiredMode.REQUIRED, example = "1500")
 	@Column(name = "Monto total")
     private double salePrice;
+	@Schema(description = "DNI del Cliente", requiredMode = Schema.RequiredMode.REQUIRED, example = "3")
 	@Column(name = "Stock")
     private int stock;
+	@Schema(description = "Validacion producto en oferta", requiredMode = Schema.RequiredMode.REQUIRED, example = "false")
 	@Column(name = "Oferta")
 	private boolean isPromotion;
     
+	@Schema(description = "Venta generada")
     @ManyToOne
     @JoinColumn(name = "sale_id")
     @JsonBackReference 		//!importante para serializacion y no generar bucle infinito

@@ -2,15 +2,27 @@ package com.facturacion.controllers.dto;
 
 import com.facturacion.models.entity.Product;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
+@Schema(description = "Modelo de ProductoDTO")
 public class ProductDTO {
+	@Schema(description = "Id de Producto", requiredMode = Schema.RequiredMode.REQUIRED, example = "5")
 	private Integer id;
+	@Schema(description = "Codigo de barra de Producto", requiredMode = Schema.RequiredMode.REQUIRED, example = "654321")
 	private Integer code;
+	@Schema(description = "Categoria de Producto", requiredMode = Schema.RequiredMode.REQUIRED, example = "Notebooks")
 	private String category;
+	@Schema(description = "Nombre de Producto", requiredMode = Schema.RequiredMode.REQUIRED, example = "Ideapad Gaming 3")
 	private String name;
+	@Schema(description = "Marca de Producto", requiredMode = Schema.RequiredMode.REQUIRED, example = "Lenovo")
 	private String brand;
+	@Schema(description = "Descripcion de Producto", requiredMode = Schema.RequiredMode.REQUIRED, example = "Lenovo Ideapad Gaming 3 16GB RAM")
 	private String description;
+	@Schema(description = "Precio de Producto", requiredMode = Schema.RequiredMode.REQUIRED, example = "1200")
     private double price;
+	@Schema(description = "Stock de Producto", requiredMode = Schema.RequiredMode.REQUIRED, example = "10")
     private int stock;
+	@Schema(description = "Validar Producto en Oferta", requiredMode = Schema.RequiredMode.REQUIRED, example = "false")
 	private boolean isPromotion;
 
     // Constructor

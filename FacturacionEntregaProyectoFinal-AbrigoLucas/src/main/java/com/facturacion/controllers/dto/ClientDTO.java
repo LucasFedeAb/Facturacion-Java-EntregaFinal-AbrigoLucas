@@ -2,13 +2,24 @@ package com.facturacion.controllers.dto;
 
 import com.facturacion.models.abstractClass.Person;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
+@Schema(description = "Modelo de ClienteDTO")
 public class ClientDTO extends Person {
+	
+	@Schema(description = "Id del Cliente", requiredMode = Schema.RequiredMode.REQUIRED, example = "1")
 	private Integer id;
+	@Schema(description = "DNI del Cliente", requiredMode = Schema.RequiredMode.REQUIRED, example = "12345678")
 	private Integer dni;
+	@Schema(description = "Nombre de Persona", requiredMode = Schema.RequiredMode.REQUIRED, example = "Jhon")
     private String firstName;
+	@Schema(description = "Apellido de Persona", requiredMode = Schema.RequiredMode.REQUIRED, example = "Doe")
     private String lastName;
+	@Schema(description = "Email de Persona", requiredMode = Schema.RequiredMode.REQUIRED, example = "jhon.doe@example.com")
     private String email;
+	@Schema(description = "Telefono de Persona", requiredMode = Schema.RequiredMode.REQUIRED, example = "1155669988")
     private Long phone;
+	@Schema(description = "Direccion de Persona", requiredMode = Schema.RequiredMode.REQUIRED, example = "Calle publica 123")
     private String address;
     
     // Constructor

@@ -2,12 +2,19 @@ package com.facturacion.controllers.dto;
 
 import java.util.List;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
+@Schema(description = "Modelo de VentaDTO")
 public class SaleDTO {
-	
+	@Schema(description = "Id de VentaDTO", requiredMode = Schema.RequiredMode.REQUIRED, example = "3")
 	private Integer id;
+	@Schema(description = "Fecha y hora de VentaDTO", requiredMode = Schema.RequiredMode.REQUIRED, example = "04-05-24 15:30:25")
 	private String dateSale;
+	@Schema(description = "Monto total de VentaDTO", requiredMode = Schema.RequiredMode.REQUIRED, example = "2500")
     private double totalSaleAmount;
+	@Schema(description = "Objeto Cliente comprador", requiredMode = Schema.RequiredMode.REQUIRED)
     private ClientDTO client;
+	@Schema(description = "Listado de productos vendidos", requiredMode = Schema.RequiredMode.REQUIRED)
     private List<ItemSaleDTO> items;
     
     

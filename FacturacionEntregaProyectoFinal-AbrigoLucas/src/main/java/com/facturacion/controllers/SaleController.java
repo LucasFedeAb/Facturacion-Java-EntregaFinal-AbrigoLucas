@@ -16,11 +16,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.facturacion.controllers.dto.SaleDTO;
-import com.facturacion.models.entity.TimeApi;
 import com.facturacion.models.entity.Sale;
-import com.facturacion.services.TimeAPIService;
+import com.facturacion.models.entity.TimeApi;
 import com.facturacion.services.SaleService;
+import com.facturacion.services.TimeAPIService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
+@Tag(name= "Gestion de Ventas", description = "Endpoints para Gestionar Ventas")
 @CrossOrigin(origins = "http://localhost:5173") //Acceder desde react en local
 @RestController
 @RequestMapping("/ventas")
@@ -30,13 +38,18 @@ public class SaleController {
     @Autowired
     private TimeAPIService timeAPIService;
     
-    // Obtener fecha y hora a traves de API
+    @Operation(summary = "Obtener fecha y hora actual desde una API")
     @GetMapping("/fechayhora-actual")
     public TimeApi getCurrentDateTime() {
         return timeAPIService.getCurrentDateTime();
     }
     
-    // Obtener todas las ventas
+    @Operation(summary = "Obtener todas las ventas")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Lista de ventas obtenida correctamente", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Sale.class)) }),
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor")
+    })
     @GetMapping(value = "/", produces = { MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<List<Sale>> getAllVentas() {
          try {
@@ -48,7 +61,13 @@ public class SaleController {
  		}
     }
     
-    // Obtener venta segun id
+    @Operation(summary = "Obtener venta por ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Venta obtenida correctamente", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Sale.class)) }),
+            @ApiResponse(responseCode = "404", description = "Venta no encontrada", content = @Content),
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor", content = @Content)
+    })
     @GetMapping(value = "/{id}/venta", produces = { MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity <Sale> getSaleById(@PathVariable("id") Integer id) {
     	try {
@@ -63,7 +82,13 @@ public class SaleController {
 		}
     }
     
-    // Obtener ventas segun dni
+    @Operation(summary = "Obtener ventas por DNI de cliente")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Lista de ventas obtenida correctamente", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Sale.class)) }),
+            @ApiResponse(responseCode = "404", description = "No se encontraron ventas para el cliente", content = @Content),
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor", content = @Content)
+    })
     @GetMapping(value = "/cliente/{dni}/venta", produces = { MediaType.APPLICATION_JSON_VALUE })
     //@Transactional
     public ResponseEntity <List<Sale>> getSalesByClientDni(@PathVariable("dni") Integer dni) {
@@ -79,7 +104,12 @@ public class SaleController {
 		}
     }
     
-    // Crear nueva venta
+    @Operation(summary = "Crear nueva venta")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Venta creada correctamente", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = SaleDTO.class)) }),
+            @ApiResponse(responseCode = "400", description = "Solicitud Incorrecta", content = @Content)
+    })
     @PostMapping(value = "/crear", consumes = { MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<SaleDTO> createSale(@RequestBody SaleDTO saleDTO) {
     	try {
@@ -94,7 +124,13 @@ public class SaleController {
         }
     }
     
-    // Eliminar venta segun id
+    
+    @Operation(summary = "Eliminar venta segun id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Venta eliminada correctamente"),
+            @ApiResponse(responseCode = "404", description = "Venta no encontrada"),
+            @ApiResponse(responseCode = "400", description = "Solicitud Incorrecta")
+    })
     @DeleteMapping(value = "/venta/{id}/delete")
 	public ResponseEntity<Void> deleteSale(@PathVariable("id") Integer id) {
     	try {

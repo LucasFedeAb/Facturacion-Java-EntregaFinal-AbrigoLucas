@@ -19,6 +19,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.facturacion.models.entity.Client;
 import com.facturacion.services.ClientService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
+@Tag(name= "Gestion de Clientes", description = "Endpoints para Gestionar Clientes")
 @CrossOrigin(origins = "http://localhost:5173") //Acceder desde react en local
 @RestController
 @RequestMapping("/clientes")
@@ -27,14 +35,28 @@ public class ClientController {
     private ClientService clientService;
 
     
-    // Crear nuevo Cliente 
+    //  
+    @Operation(summary = "Crear nuevo Cliente")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "201", description = "Crear Cliente correctamente", content = {
+					@Content(mediaType = "application/json", schema = @Schema(implementation = Client.class)) }),
+			@ApiResponse(responseCode = "400", description = "Solicitud Incorrecta", content = @Content) })
     @PostMapping(value = "/crear", consumes = { MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<Client> createClient(@RequestBody Client client) {
-		clientService.createClient(client);
-		return new ResponseEntity<>(client, HttpStatus.CREATED); // Codigo 201
+    	try {
+    		clientService.createClient(client);
+    		return new ResponseEntity<>(client, HttpStatus.CREATED); // Codigo 201
+    	} catch (Exception e) {
+    		return new ResponseEntity<>(HttpStatus.BAD_REQUEST); // Codigo 400
+    	}
 	}
     
-    // Actualizar cliente
+    @Operation(summary = "Actualizar datos del Cliente")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Cliente actualizado exitosamente", content = {
+					@Content(mediaType = "application/json", schema = @Schema(implementation = Client.class)) }),
+            @ApiResponse(responseCode = "404", description = "Cliente no encontrado")
+    })
     @PutMapping(value="/{id}/actualizar", consumes = { MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<Client> updateClient(@PathVariable("id") Integer dni, @RequestBody Client client) {
     	Client clientUpdated = clientService.updateClientByDni(dni, client);
@@ -46,7 +68,13 @@ public class ClientController {
 			}
     }
     
-    // Obtener todos los clientes
+    // 
+    @Operation(summary = "Obtener lista de todos los clientes")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Lista de clientes obtenida exitosamente", content = {
+					@Content(mediaType = "application/json", schema = @Schema(implementation = Client.class)) }),
+            @ApiResponse(responseCode = "500", description = "Error interno del servido")
+    })
     @GetMapping (value = "/", produces = { MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<List<Client>> listClients() {
 		try {
@@ -59,6 +87,12 @@ public class ClientController {
 	}
     
     // Obtener cliente segun dni
+    @Operation(summary = "Obtener cliente segun dni")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Cliente encontrado exitosamente", content = {
+					@Content(mediaType = "application/json", schema = @Schema(implementation = Client.class)) }),
+            @ApiResponse(responseCode = "404", description = "Cliente no encontrado")
+    })
     @GetMapping(value = "/cliente/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<Client> getClientByDNI(@PathVariable("id") Integer dni) {
 		try {
@@ -74,7 +108,13 @@ public class ClientController {
 
 	}
     
-    // Eliminar cliente segund dni
+    // 
+    @Operation(summary = "Eliminar cliente segund dni")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Cliente eliminado exitosamente"),
+            @ApiResponse(responseCode = "404", description = "Cliente no encontrado"),
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor")
+    })
     @DeleteMapping(value = "/{id}/eliminar")
 	public ResponseEntity<Void> deleteClient(@PathVariable("id") Integer dni) {
     	try {

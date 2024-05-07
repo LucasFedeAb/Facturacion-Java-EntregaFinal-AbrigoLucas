@@ -1,5 +1,6 @@
 package com.facturacion.models.entity;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -7,27 +8,36 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+@Schema(description = "Modelo de Productos")
 @Entity
 @Table (name = "Productos")
 public class Product {
-	
+	@Schema(description = "Id del Cliente", requiredMode = Schema.RequiredMode.AUTO)
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+	@Schema(description = "Id del Cliente", requiredMode = Schema.RequiredMode.REQUIRED, example = "123456")
 	@Column(name = "Codigo barra", unique = true)
 	private Integer code;
+	@Schema(description = "Categoria Producto", requiredMode = Schema.RequiredMode.REQUIRED, example = "Celulares")
 	@Column(name = "Categoria")
 	private String category;
+	@Schema(description = "Nombre Producto", requiredMode = Schema.RequiredMode.REQUIRED, example = "Iphone 15")
 	@Column(name = "Nombre")
 	private String name;
+	@Schema(description = "Marca Producto", requiredMode = Schema.RequiredMode.REQUIRED, example = "Apple")
 	@Column(name = "Marca")
 	private String brand;
+	@Schema(description = "Descripcion Producto", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
 	@Column(name = "Descripcion")
 	private String description;
+	@Schema(description = "Precio Producto", requiredMode = Schema.RequiredMode.REQUIRED, example = "1000.00")
 	@Column(name = "Precio")
     private double price;
+	@Schema(description = "Stock Producto", requiredMode = Schema.RequiredMode.REQUIRED, example = "5")
 	@Column(name = "Stock")
     private int stock;
+	@Schema(description = "Producto de Oferta", requiredMode = Schema.RequiredMode.NOT_REQUIRED, example = "true")
 	@Column(name = "Oferta")
 	private boolean isPromotion;
 	

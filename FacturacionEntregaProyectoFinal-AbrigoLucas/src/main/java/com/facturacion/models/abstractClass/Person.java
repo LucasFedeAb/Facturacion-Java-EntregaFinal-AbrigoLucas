@@ -1,23 +1,24 @@
 package com.facturacion.models.abstractClass;
 
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
 
-
+@Schema(description = "Modelo de Persona")
 @MappedSuperclass
 public abstract class Person {
 	
-	
+	@Schema(description = "DNI de la Persona", requiredMode = Schema.RequiredMode.REQUIRED, example = "12345678")
 	@Column(name = "Dni", unique = true)
     private Integer dni;
-	
+	@Schema(description = "Nombre de Persona", requiredMode = Schema.RequiredMode.REQUIRED, example = "Jhon")
 	@Column(name = "Nombre")
     private String firstName;
-
+	@Schema(description = "Apellido de Persona", requiredMode = Schema.RequiredMode.REQUIRED, example = "Doe")
     @Column(name = "Apellido")
     private String lastName;
-
+	@Schema(description = "Email de Persona", requiredMode = Schema.RequiredMode.REQUIRED, example = "jhon.doe@example.com")
     @Column(name = "Email")
     private String email;
     

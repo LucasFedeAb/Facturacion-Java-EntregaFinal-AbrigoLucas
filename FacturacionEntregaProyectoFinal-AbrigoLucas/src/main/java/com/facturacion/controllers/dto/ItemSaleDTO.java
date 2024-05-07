@@ -1,8 +1,12 @@
 package com.facturacion.controllers.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
+@Schema(description = "Modelo de Item agregado a venta")
 public class ItemSaleDTO {
-	
+	@Schema(description = "Cantidad a vender", requiredMode = Schema.RequiredMode.REQUIRED, example = "2")
 	private int quantity;
+	@Schema(description = "Objeto Producto Entero", requiredMode = Schema.RequiredMode.REQUIRED)
     private ProductDTO product;
     
 	public ItemSaleDTO() {
